@@ -1,0 +1,29 @@
+spring:
+#  data:
+#    mongodb:
+#      uri: mongodb://localhost:27017/techchallenge
+#      uuid-representation: standard
+  # Remove spring.datasource and spring.jpa sections
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/techchallenge
+    username: "root"
+    password: "m@_ssq@HJ7<h(+"
+    driver-class-name: org.postgresql.Driver
+client:
+  mercado-pago:
+    user_id: 123456
+    pos_id: 123456
+    external_store_id: "X"
+    external_pos_id: "X"
+    auth_header: "Bearer TEST-X"
+azure:
+  entra-id:
+    tenant-id: "12"
+    tenant-name: "12"
+    client-id: "12"
+    client-secret: "12"

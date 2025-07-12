@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: techchallenge03
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+      fail-on-ignored-properties: true
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    operationsSorter: alpha
+    docExpansion: none
+tag:
+  swagger:
+    pagamento:
+      name: "Pagamento"
+      description: "API de Pagamentos"
+azure:
+  entra-id:
+    tenant-id: "${AZURE_ENTRA_ID_TENANT_ID}"
+    tenant-name: "${AZURE_ENTRA_ID_TENANT_NAME}"
+    client-id: "${AZURE_ENTRA_ID_CLIENT_ID}"
+    client-secret: "${AZURE_ENTRA_ID_CLIENT_SECRET}"
+mercado-pago:
+  ativo: "${MERCADO_PAGO_ATIVO:false}"
