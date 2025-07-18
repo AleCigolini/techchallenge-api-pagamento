@@ -37,10 +37,10 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
             pagamento.setCodigoPedido(pedido.getId());
 
             pagamento.setStatus(!criouPedidoMercadoPago ?
-                    StatusPagamentoEnum.FALHA.toString() :
+                    StatusPagamentoEnum.REJEITADO.toString() :
                     StatusPagamentoEnum.PENDENTE.toString());
 
-            return pagamentoGateway.salvarPagamento(pagamento);
+            return pagamentoGateway.salvar(pagamento);
         }
         return null;
     }

@@ -1,12 +1,17 @@
 package br.com.fiap.techchallenge03.pagamento.common.interfaces;
 
-import br.com.fiap.techchallenge03.pagamento.common.domain.entity.JpaPagamentoEntity;
+import br.com.fiap.techchallenge03.pagamento.domain.Pagamento;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PagamentoDatabase {
 
-    List<JpaPagamentoEntity> buscarPagamentosPorPedidoId(String pedidoId);
+    Pagamento salvar(Pagamento pagamento);
 
-    JpaPagamentoEntity salvarPagamento(JpaPagamentoEntity jpaPagamentoEntity);
+    Optional<Pagamento> buscarPorId(String id);
+
+    List<Pagamento> buscarPorCodigoPedido(String codigoPedido);
+
+    List<Pagamento> buscarPorStatus(String status);
 }

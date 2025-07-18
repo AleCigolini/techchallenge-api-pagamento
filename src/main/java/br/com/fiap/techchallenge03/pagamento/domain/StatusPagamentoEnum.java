@@ -1,12 +1,11 @@
 package br.com.fiap.techchallenge03.pagamento.domain;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import br.com.fiap.techchallenge03.core.config.exception.StatusPagamentoInvalidoException;
 
 public enum StatusPagamentoEnum {
-
     PENDENTE("Pendente"),
     APROVADO("Aprovado"),
-    FALHA("Falha"),
+    REJEITADO("Rejeitado"),
     CANCELADO("Cancelado");
 
     private final String status;
@@ -15,8 +14,16 @@ public enum StatusPagamentoEnum {
         this.status = status;
     }
 
-    @JsonValue
     public String getStatus() {
         return status;
+    }
+
+    public static StatusPagamentoEnum fromString(String text) {
+        for (StatusPagamentoEnum status : StatusPagamentoEnum.values()) {
+            if (status.status.equalsIgnoreCase(text)) {
+                return status;
+            }
+        }
+        throw new StatusPagamentoInvalidoException("Status de pagamento inválido: " + text + ". Status válidos: PENDENTE, APROVADO, REJEITADO, CANCELADO");
     }
 }

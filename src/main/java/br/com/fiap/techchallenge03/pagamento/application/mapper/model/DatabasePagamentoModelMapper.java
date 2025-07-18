@@ -1,7 +1,6 @@
 package br.com.fiap.techchallenge03.pagamento.application.mapper.model;
 
 import br.com.fiap.techchallenge03.pagamento.application.mapper.DatabasePagamentoMapper;
-import br.com.fiap.techchallenge03.pagamento.common.domain.entity.JpaPagamentoEntity;
 import br.com.fiap.techchallenge03.pagamento.domain.Pagamento;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -16,17 +15,17 @@ public class DatabasePagamentoModelMapper implements DatabasePagamentoMapper {
     private ModelMapper modelMapper;
 
     @Override
-    public List<Pagamento> jpaPagamentosEntityParaPagamentos(List<JpaPagamentoEntity> jpaPagamentoEntities) {
+    public List<Pagamento> jpaPagamentosEntityParaPagamentos(List<Pagamento> jpaPagamentoEntities) {
         return jpaPagamentoEntities.stream().map(jpaPagamentoEntity -> modelMapper.map(jpaPagamentoEntity, Pagamento.class)).toList();
     }
 
     @Override
-    public JpaPagamentoEntity pagamentoParaJpaPagamentoEntity(Pagamento pagamento) {
-        return modelMapper.map(pagamento, JpaPagamentoEntity.class);
+    public Pagamento pagamentoParaJpaPagamentoEntity(Pagamento pagamento) {
+        return modelMapper.map(pagamento, Pagamento.class);
     }
 
     @Override
-    public Pagamento jpaPagamentoEntityParaPagamento(JpaPagamentoEntity jpaPagamentoEntity) {
+    public Pagamento jpaPagamentoEntityParaPagamento(Pagamento jpaPagamentoEntity) {
         return modelMapper.map(jpaPagamentoEntity, Pagamento.class);
     }
 }

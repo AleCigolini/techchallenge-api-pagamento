@@ -1,19 +1,10 @@
 spring:
-#  data:
-#    mongodb:
-#      uri: mongodb://localhost:27017/techchallenge
-#      uuid-representation: standard
-  # Remove spring.datasource and spring.jpa sections
-  jpa:
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-  datasource:
-    url: jdbc:postgresql://localhost:5432/techchallenge
-    username: "root"
-    password: "m@_ssq@HJ7<h(+"
-    driver-class-name: org.postgresql.Driver
+  data:
+    mongodb:
+      uri: mongodb://admin:admin123@localhost:27017/tech_challenge_pagamentos
+      database: tech_challenge_pagamentos
+      auto-index-creation: true
+      authentication-database: admin
 client:
   mercado-pago:
     user_id: 123456
@@ -21,6 +12,15 @@ client:
     external_store_id: "X"
     external_pos_id: "X"
     auth_header: "Bearer TEST-X"
+
+logging:
+  level:
+    org.springframework.data.mongodb: DEBUG
+    br.com.fiap.techchallenge03: DEBUG
+
+server:
+  port: 8080
+
 azure:
   entra-id:
     tenant-id: "12"

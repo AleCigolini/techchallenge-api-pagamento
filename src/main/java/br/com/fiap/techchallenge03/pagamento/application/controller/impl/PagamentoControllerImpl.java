@@ -39,14 +39,14 @@ public class PagamentoControllerImpl implements PagamentoController {
             PagamentoPresenter pagamentoPresenter,
             RequestPagamentoMapper requestPagamentoMapper,
             PagamentoDatabase pagamentoDatabase,
-            DatabasePagamentoMapper databasePagamentoMapper,
+//            DatabasePagamentoMapper databasePagamentoMapper,
             MercadoPagoOrderRequestMapper mercadoPagoOrderRequestMapper,
             MercadoPagoCodigoQRClient mercadoPagoCodigoQRClient,
             MercadoPagoPosClient mercadoPagoPosClient,
             MercadoPagoProperties mercadoPagoProperties
     ) {
         final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase = new CriarPedidoMercadoPagoUseCaseImpl(mercadoPagoOrderRequestMapper, mercadoPagoCodigoQRClient, mercadoPagoProperties);
-        final PagamentoGateway pagamentoGateway = new PagamentoGatewayImpl(pagamentoDatabase, databasePagamentoMapper);
+        final PagamentoGateway pagamentoGateway = new PagamentoGatewayImpl(pagamentoDatabase);
 
         this.salvarPagamentoUseCase = new SalvarPagamentoUseCaseImpl(pagamentoGateway, criarPedidoMercadoPagoUseCase);
         this.consultarPagamentoUseCase = new ConsultarPagamentoUseCaseImpl(pagamentoGateway);
