@@ -7,11 +7,11 @@ spring:
       authentication-database: admin
 client:
   mercado-pago:
-    user_id: 2307740945
-    pos_id: 111018077
-    external_store_id: "FIAP001"
-    external_pos_id: "FIAP001CAIXA001"
-    auth_header: "Bearer APP_USR-6626499642890434-031509-c433b0d6b17ee9c91743eded89272fde-2307740945"
+    user_id: 123456
+    pos_id: 123456
+    external_store_id: "X"
+    external_pos_id: "X"
+    auth_header: "Bearer TEST-X"
 
 logging:
   level:
