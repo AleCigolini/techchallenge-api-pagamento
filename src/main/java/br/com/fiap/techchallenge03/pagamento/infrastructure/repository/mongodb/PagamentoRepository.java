@@ -9,7 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface PagamentoRepository extends MongoRepository<Pagamento, String> {
+
     List<Pagamento> findByCodigoPedido(String codigoPedido);
+
     Optional<Pagamento> findByCodigoPedidoAndStatus(String codigoPedido, String status);
+
     List<Pagamento> findByStatus(String status);
 }

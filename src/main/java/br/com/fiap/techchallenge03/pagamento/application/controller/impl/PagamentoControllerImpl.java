@@ -4,7 +4,6 @@ import br.com.fiap.techchallenge03.core.config.properties.MercadoPagoProperties;
 import br.com.fiap.techchallenge03.pagamento.application.controller.PagamentoController;
 import br.com.fiap.techchallenge03.pagamento.application.gateway.PagamentoGateway;
 import br.com.fiap.techchallenge03.pagamento.application.gateway.impl.PagamentoGatewayImpl;
-import br.com.fiap.techchallenge03.pagamento.application.mapper.DatabasePagamentoMapper;
 import br.com.fiap.techchallenge03.pagamento.application.mapper.RequestPagamentoMapper;
 import br.com.fiap.techchallenge03.pagamento.application.presenter.PagamentoPresenter;
 import br.com.fiap.techchallenge03.pagamento.application.usecase.ConsultarPagamentoUseCase;
@@ -39,7 +38,6 @@ public class PagamentoControllerImpl implements PagamentoController {
             PagamentoPresenter pagamentoPresenter,
             RequestPagamentoMapper requestPagamentoMapper,
             PagamentoDatabase pagamentoDatabase,
-//            DatabasePagamentoMapper databasePagamentoMapper,
             MercadoPagoOrderRequestMapper mercadoPagoOrderRequestMapper,
             MercadoPagoCodigoQRClient mercadoPagoCodigoQRClient,
             MercadoPagoPosClient mercadoPagoPosClient,
@@ -56,9 +54,9 @@ public class PagamentoControllerImpl implements PagamentoController {
     }
 
     @Override
-    public List<PagamentoResponseDto> buscarPagamentosPorPedidoId(String pedidoId) {
+    public List<PagamentoResponseDto> buscarPorPedidoId(String pedidoId) {
         return pagamentoPresenter.pagamentosParaPagamentoResponseDTOs(
-                consultarPagamentoUseCase.buscarPagamentosPorPedidoId(pedidoId));
+                consultarPagamentoUseCase.buscarPorPedidoId(pedidoId));
     }
 
     @Override
@@ -74,8 +72,15 @@ public class PagamentoControllerImpl implements PagamentoController {
     }
 
     @Override
-    public List<PagamentoResponseDto> buscarPagamentosPorStatus(String status) {
+    public List<PagamentoResponseDto> buscarPorStatus(String status) {
         return pagamentoPresenter.pagamentosParaPagamentoResponseDTOs(
-                consultarPagamentoUseCase.buscarPagamentosPorStatus(status));
+                consultarPagamentoUseCase.buscarPorStatus(status));
+    }
+
+    @Override
+    public PagamentoResponseDto atualizarStatusPagamento(String id, String novoStatus) {
+        return pagamentoPresenter.pagamentoParaPagamentoResponseDTO(
+                salvarPagamentoUseCase.atualizarStatusPagamento(id, novoStatus));
+
     }
 }

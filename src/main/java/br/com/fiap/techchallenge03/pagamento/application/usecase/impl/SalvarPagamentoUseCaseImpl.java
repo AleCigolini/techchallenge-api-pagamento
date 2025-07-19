@@ -43,4 +43,10 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
         }
         return null;
     }
+
+    @Override
+    public Pagamento atualizarStatusPagamento(String id, String novoStatus) {
+        return pagamentoGateway.atualizarStatusPagamento(id, novoStatus)
+                .orElse(null);
+    }
 }

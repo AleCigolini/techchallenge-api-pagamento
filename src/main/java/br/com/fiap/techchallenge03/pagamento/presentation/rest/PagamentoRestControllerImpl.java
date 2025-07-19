@@ -24,8 +24,16 @@ public class PagamentoRestControllerImpl implements PagamentoRestController {
 
     @Override
     @GetMapping("/pedidos/{pedidoId}")
-    public ResponseEntity<List<PagamentoResponseDto>> buscarPagamentosPorPedidoId(@PathVariable String pedidoId) {
-        List<PagamentoResponseDto> pagamentos = pagamentoController.buscarPagamentosPorPedidoId(pedidoId);
+    public ResponseEntity<List<PagamentoResponseDto>> buscarPorPedidoId(@PathVariable String pedidoId) {
+        List<PagamentoResponseDto> pagamentos = pagamentoController.buscarPorPedidoId(pedidoId);
+
+        return ResponseEntity.ok(pagamentos);
+    }
+
+    @Override
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<PagamentoResponseDto>> buscarPorStatus(@PathVariable String status) {
+        List<PagamentoResponseDto> pagamentos = pagamentoController.buscarPorStatus(status);
 
         return ResponseEntity.ok(pagamentos);
     }
@@ -39,26 +47,18 @@ public class PagamentoRestControllerImpl implements PagamentoRestController {
     @Override
     @PostMapping("/pedidos")
     public ResponseEntity<PagamentoResponseDto> fazerPagamentoDoPedido(@RequestBody @Valid PedidoRequestDto pedidoRequestDto) throws URISyntaxException {
-        PagamentoResponseDto pagamentoSalvo = pagamentoController.fazerPagamentoDoPedido(pedidoRequestDto);
+        PagamentoResponseDto pagamentoResponseDto = pagamentoController.fazerPagamentoDoPedido(pedidoRequestDto);
 
-        return ResponseEntity.created(new URI("/pagamentos/" + pagamentoSalvo.getId()))
-                .body(pagamentoSalvo);
+        return ResponseEntity.created(new URI("/pagamentos/" + pagamentoResponseDto.getId()))
+                .body(pagamentoResponseDto);
     }
 
-//    @PatchMapping("/{id}/status")
-//    public ResponseEntity<PagamentoResponseDto> atualizarStatusPagamento(
-//            @PathVariable String id,
-//            @RequestParam String novoStatus) {
-//        return pagamentoController.atualizarStatusPagamento(id, novoStatus)
-//                .map(this::convertToDto)
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<PagamentoResponseDto> atualizarStatusPagamento(
+            @PathVariable String id,
+            @RequestParam String novoStatus) {
+        PagamentoResponseDto pagamentoResponseDto = pagamentoController.atualizarStatusPagamento(id, novoStatus);
 
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<PagamentoResponseDto>> buscarPagamentosPorStatus(@PathVariable String status) {
-        List<PagamentoResponseDto> pagamentos = pagamentoController.buscarPagamentosPorStatus(status);
-
-        return ResponseEntity.ok(pagamentos);
+        return ResponseEntity.ok(pagamentoResponseDto);
     }
 }

@@ -30,13 +30,8 @@ public class PagamentoGatewayImpl implements PagamentoGateway {
     }
 
     @Override
-    public List<Pagamento> buscarPagamentosPorPedidoId(String codigoPedido) {
+    public List<Pagamento> buscarPorPedidoId(String codigoPedido) {
         return pagamentoDatabase.buscarPorCodigoPedido(codigoPedido);
-    }
-
-    @Override
-    public List<Pagamento> buscarPagamentosPorStatus(String status) {
-        return pagamentoDatabase.buscarPorStatus(status);
     }
 
     @Override
@@ -47,6 +42,16 @@ public class PagamentoGatewayImpl implements PagamentoGateway {
     @Override
     public List<Pagamento> buscarPorStatus(String status) {
         return pagamentoDatabase.buscarPorStatus(status);
+    }
+
+    @Override
+    public Optional<Pagamento> buscarPagamentoPorPedidoEStatus(String codigoPedido, String status) {
+        return pagamentoDatabase.buscarPagamentoPorPedidoEStatus(codigoPedido, status);
+    }
+
+    @Override
+    public Optional<Pagamento> atualizarStatusPagamento(String id, String novoStatus) {
+        return pagamentoDatabase.atualizarStatusPagamento(id, novoStatus);
     }
 
     @Override

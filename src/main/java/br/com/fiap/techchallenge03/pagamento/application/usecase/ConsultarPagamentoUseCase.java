@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ConsultarPagamentoUseCase {
 
-    List<Pagamento> buscarPagamentosPorPedidoId(String pedidoId);
+    List<Pagamento> buscarPorPedidoId(String pedidoId);
 
-    List<Pagamento> buscarPagamentosPorStatus(String status);
+    List<Pagamento> buscarPorStatus(String status);
 }

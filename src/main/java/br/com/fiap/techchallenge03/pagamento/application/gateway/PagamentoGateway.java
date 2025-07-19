@@ -10,13 +10,15 @@ public interface PagamentoGateway {
 
     Pagamento salvar(Pagamento pagamento);
 
-    List<Pagamento> buscarPagamentosPorPedidoId(String codigoPedido);
-
-    List<Pagamento> buscarPagamentosPorStatus(String status);
-
-    Optional<Pagamento> buscarPorId(String id);
+    List<Pagamento> buscarPorPedidoId(String codigoPedido);
 
     List<Pagamento> buscarPorStatus(String status);
 
+    Optional<Pagamento> buscarPorId(String id);
+
     BufferedImage gerarImagemCodigoQRCaixa();
+
+    Optional<Pagamento> buscarPagamentoPorPedidoEStatus(String codigoPedido, String status);
+
+    Optional<Pagamento> atualizarStatusPagamento(String id, String novoStatus);
 }

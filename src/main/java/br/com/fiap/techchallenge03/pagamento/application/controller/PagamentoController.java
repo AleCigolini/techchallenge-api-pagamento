@@ -8,11 +8,13 @@ import java.util.List;
 
 public interface PagamentoController {
 
-    List<PagamentoResponseDto> buscarPagamentosPorPedidoId(String pedidoId);
+    List<PagamentoResponseDto> buscarPorPedidoId(String pedidoId);
 
     BufferedImage gerarImagemCodigoQRCaixa();
 
     PagamentoResponseDto fazerPagamentoDoPedido(PedidoRequestDto pedidoRequestDTO);
 
-    List<PagamentoResponseDto> buscarPagamentosPorStatus(String status);
+    List<PagamentoResponseDto> buscarPorStatus(String status);
+
+    PagamentoResponseDto atualizarStatusPagamento(String id, String novoStatus);
 }

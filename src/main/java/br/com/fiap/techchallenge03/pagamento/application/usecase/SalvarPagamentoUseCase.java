@@ -6,4 +6,6 @@ import br.com.fiap.techchallenge03.pagamento.domain.Pedido;
 public interface SalvarPagamentoUseCase {
 
     Pagamento fazerPagamentoDoPedido(Pedido pedido);
+
+    Pagamento atualizarStatusPagamento(String id, String novoStatus);
 }

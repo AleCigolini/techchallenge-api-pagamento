@@ -32,7 +32,16 @@ public interface PagamentoRestController {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    ResponseEntity<List<PagamentoResponseDto>> buscarPagamentosPorPedidoId(String pedidoId);
+    ResponseEntity<List<PagamentoResponseDto>> buscarPorPedidoId(String pedidoId);
+
+    @Operation(summary = "Atualiza o status de um pagamento",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso"),
+                    @ApiResponse(responseCode = "400", description = "Erro no cadastro do pagamento/Erros de validação",
+                            content = @Content(schema = @Schema(ref = "Problema"))
+                    )
+            })
+    ResponseEntity<PagamentoResponseDto> atualizarStatusPagamento(String id, String novoStatus);
 
     /**
      * Retorna a imagem QRCode de um único caixa vinculado a uma única loja
@@ -55,7 +64,7 @@ public interface PagamentoRestController {
     /**
      * Criar pedido
      *
-     * @param pedidoRequestDTO DTO para criação de pedido
+     * @param pedidoRequestDto DTO para criação de pedido
      * @return {@link PagamentoResponseDto}
      */
     @Operation(summary = "Criar novo pagamento",
@@ -67,15 +76,6 @@ public interface PagamentoRestController {
             })
     ResponseEntity<PagamentoResponseDto> fazerPagamentoDoPedido(PedidoRequestDto pedidoRequestDto) throws URISyntaxException;
 
-//    @Operation(summary = "Atualiza o status de um pagamento",
-//            responses = {
-//                    @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso"),
-//                    @ApiResponse(responseCode = "400", description = "Erro no cadastro do pagamento/Erros de validação",
-//                            content = @Content(schema = @Schema(ref = "Problema"))
-//                    )
-//            })
-//    ResponseEntity<PagamentoResponseDto> atualizarStatusPagamento(String id, String novoStatus);
-
     @Operation(summary = "Busca pagamentos por status",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Pagamentos encontrados"),
@@ -84,6 +84,6 @@ public interface PagamentoRestController {
                     ),
                     @ApiResponse(responseCode = "404", description = "Nenhum pagamento encontrado")
             })
-    ResponseEntity<List<PagamentoResponseDto>> buscarPagamentosPorStatus(String status);
+    ResponseEntity<List<PagamentoResponseDto>> buscarPorStatus(String status);
 
 }

@@ -14,4 +14,8 @@ public interface PagamentoDatabase {
     List<Pagamento> buscarPorCodigoPedido(String codigoPedido);
 
     List<Pagamento> buscarPorStatus(String status);
+
+    Optional<Pagamento> buscarPagamentoPorPedidoEStatus(String codigoPedido, String status);
+
+    Optional<Pagamento> atualizarStatusPagamento(String id, String novoStatus);
 }

@@ -6,6 +6,7 @@ import br.com.fiap.techchallenge03.pagamento.infrastructure.repository.mongodb.P
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,11 @@ public class PagamentoMongoDatabaseImpl implements PagamentoDatabase {
 
     @Override
     public Pagamento salvar(Pagamento pagamento) {
+
+        pagamento.setDataCriacao(OffsetDateTime.now());
+        if (pagamento.getStatus() == null) {
+            pagamento.setStatus("PENDENTE");
+        }
         return pagamentoRepository.save(pagamento);
     }
 
@@ -30,8 +36,20 @@ public class PagamentoMongoDatabaseImpl implements PagamentoDatabase {
         return pagamentoRepository.findByCodigoPedido(codigoPedido);
     }
 
+    public Optional<Pagamento> buscarPagamentoPorPedidoEStatus(String codigoPedido, String status) {
+        return pagamentoRepository.findByCodigoPedidoAndStatus(codigoPedido, status);
+    }
+
     @Override
     public List<Pagamento> buscarPorStatus(String status) {
         return pagamentoRepository.findByStatus(status);
+    }
+
+    public Optional<Pagamento> atualizarStatusPagamento(String id, String novoStatus) {
+        return pagamentoRepository.findById(id)
+                .map(pagamento -> {
+                    pagamento.setStatus(novoStatus);
+                    return pagamentoRepository.save(pagamento);
+                });
     }
 }
