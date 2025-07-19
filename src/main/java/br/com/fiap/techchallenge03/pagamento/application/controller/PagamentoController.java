@@ -13,4 +13,6 @@ public interface PagamentoController {
     BufferedImage gerarImagemCodigoQRCaixa();
 
     PagamentoResponseDto fazerPagamentoDoPedido(PedidoRequestDto pedidoRequestDTO);
+
+    List<PagamentoResponseDto> buscarPagamentosPorStatus(String status);
 }

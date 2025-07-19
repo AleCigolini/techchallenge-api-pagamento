@@ -67,14 +67,14 @@ public interface PagamentoRestController {
             })
     ResponseEntity<PagamentoResponseDto> fazerPagamentoDoPedido(PedidoRequestDto pedidoRequestDto) throws URISyntaxException;
 
-    @Operation(summary = "Atualiza o status de um pagamento",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso"),
-                    @ApiResponse(responseCode = "400", description = "Erro no cadastro do pagamento/Erros de validação",
-                            content = @Content(schema = @Schema(ref = "Problema"))
-                    )
-            })
-    ResponseEntity<PagamentoResponseDto> atualizarStatusPagamento(String id, String novoStatus);
+//    @Operation(summary = "Atualiza o status de um pagamento",
+//            responses = {
+//                    @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso"),
+//                    @ApiResponse(responseCode = "400", description = "Erro no cadastro do pagamento/Erros de validação",
+//                            content = @Content(schema = @Schema(ref = "Problema"))
+//                    )
+//            })
+//    ResponseEntity<PagamentoResponseDto> atualizarStatusPagamento(String id, String novoStatus);
 
     @Operation(summary = "Busca pagamentos por status",
             responses = {

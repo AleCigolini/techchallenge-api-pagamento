@@ -46,7 +46,7 @@ public class PagamentoControllerImpl implements PagamentoController {
             MercadoPagoProperties mercadoPagoProperties
     ) {
         final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase = new CriarPedidoMercadoPagoUseCaseImpl(mercadoPagoOrderRequestMapper, mercadoPagoCodigoQRClient, mercadoPagoProperties);
-        final PagamentoGateway pagamentoGateway = new PagamentoGatewayImpl(pagamentoDatabase);
+        final PagamentoGateway pagamentoGateway = new PagamentoGatewayImpl(pagamentoDatabase, mercadoPagoPosClient, mercadoPagoProperties);
 
         this.salvarPagamentoUseCase = new SalvarPagamentoUseCaseImpl(pagamentoGateway, criarPedidoMercadoPagoUseCase);
         this.consultarPagamentoUseCase = new ConsultarPagamentoUseCaseImpl(pagamentoGateway);
@@ -71,5 +71,11 @@ public class PagamentoControllerImpl implements PagamentoController {
         return pagamentoPresenter.pagamentoParaPagamentoResponseDTO(
                 salvarPagamentoUseCase.fazerPagamentoDoPedido(
                         requestPagamentoMapper.pedidoRequestDtoParaPedido(pedidoRequestDTO)));
+    }
+
+    @Override
+    public List<PagamentoResponseDto> buscarPagamentosPorStatus(String status) {
+        return pagamentoPresenter.pagamentosParaPagamentoResponseDTOs(
+                consultarPagamentoUseCase.buscarPagamentosPorStatus(status));
     }
 }

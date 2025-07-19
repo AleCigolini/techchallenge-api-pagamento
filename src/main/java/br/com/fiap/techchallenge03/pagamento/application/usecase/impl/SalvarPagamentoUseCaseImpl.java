@@ -28,7 +28,6 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
     @Transactional
     public Pagamento fazerPagamentoDoPedido(Pedido pedido) {
 
-        // TODO: Validar envio de pagamento mercado pago
         boolean criouPedidoMercadoPago = criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedido);
 
         if (isMercadoPagoAtivo) {

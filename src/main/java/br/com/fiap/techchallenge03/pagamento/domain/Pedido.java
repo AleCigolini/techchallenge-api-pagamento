@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge03.pagamento.domain;
 
 import br.com.fiap.techchallenge03.core.utils.domain.DominioBase;
+import br.com.fiap.techchallenge03.pagamento.common.domain.dto.request.ProdutoRequestDto;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -15,5 +16,6 @@ public class Pedido extends DominioBase {
     private BigDecimal preco;
     private String codigoPagamento;
     private String observacao;
+    private List<Produto> produtos;
     private List<Pagamento> pagamentos;
 }

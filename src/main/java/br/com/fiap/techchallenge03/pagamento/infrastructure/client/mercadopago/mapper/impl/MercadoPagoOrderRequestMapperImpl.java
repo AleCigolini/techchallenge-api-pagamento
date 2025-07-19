@@ -16,29 +16,29 @@ public class MercadoPagoOrderRequestMapperImpl implements MercadoPagoOrderReques
     @Override
     public MercadoPagoOrderRequest pedidoParaMercadoPagoOrderItemRequest(Pedido pedido) {
 
-//        List<MercadoPagoOrderItemRequest> mercadoPagoOrderItemRequests = new ArrayList<>();
-//
-//        pedido.getProdutos().forEach(produto -> {
-//            BigDecimal totalPrecoItem = produto.getProduto().getPreco().multiply(BigDecimal.valueOf(produto.getQuantidade()));
-//            MercadoPagoOrderItemRequest mercadoPagoOrderItemRequest = MercadoPagoOrderItemRequest.builder()
-//                    .skuNumber(produto.getProduto().getId())
-//                    .category(produto.getProduto().getCategoria().getNome())
-//                    .title(produto.getProduto().getNome())
-//                    .description(produto.getProduto().getDescricao())
-//                    .quantity(produto.getQuantidade())
-//                    .unitPrice(produto.getProduto().getPreco())
-//                    .unitMeasure("unit")
-//                    .totalAmount(totalPrecoItem)
-//                    .build();
-//            mercadoPagoOrderItemRequests.add(mercadoPagoOrderItemRequest);
-//        });
+        List<MercadoPagoOrderItemRequest> mercadoPagoOrderItemRequests = new ArrayList<>();
+
+        pedido.getProdutos().forEach(produto -> {
+            BigDecimal totalPrecoItem = produto.getPreco().multiply(BigDecimal.valueOf(produto.getQuantidade()));
+            MercadoPagoOrderItemRequest mercadoPagoOrderItemRequest = MercadoPagoOrderItemRequest.builder()
+                    .skuNumber(produto.getId())
+                    .category(produto.getCategoria())
+                    .title(produto.getNome())
+                    .description(produto.getDescricao())
+                    .quantity(produto.getQuantidade())
+                    .unitPrice(produto.getPreco())
+                    .unitMeasure("unit")
+                    .totalAmount(totalPrecoItem)
+                    .build();
+            mercadoPagoOrderItemRequests.add(mercadoPagoOrderItemRequest);
+        });
 
         return MercadoPagoOrderRequest.builder()
                 .externalReference(pedido.getId())
                 .title(pedido.getCodigo())
                 .description(pedido.getObservacao())
                 .totalAmount(pedido.getPreco())
-//                .items(mercadoPagoOrderItemRequests)
+                .items(mercadoPagoOrderItemRequests)
                 .build();
     }
 }

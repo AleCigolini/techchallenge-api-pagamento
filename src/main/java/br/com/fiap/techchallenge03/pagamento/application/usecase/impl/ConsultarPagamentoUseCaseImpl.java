@@ -18,4 +18,9 @@ public class ConsultarPagamentoUseCaseImpl implements ConsultarPagamentoUseCase 
     public List<Pagamento> buscarPagamentosPorPedidoId(String pedidoId) {
         return pagamentoGateway.buscarPagamentosPorPedidoId(pedidoId);
     }
+
+    @Override
+    public List<Pagamento> buscarPagamentosPorStatus(String status) {
+        return pagamentoGateway.buscarPagamentosPorStatus(status);
+    }
 }
