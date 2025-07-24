@@ -45,7 +45,7 @@ public class PagamentoRestControllerImpl implements PagamentoRestController {
     }
 
     @Override
-    @PostMapping("/pedidos")
+    @PostMapping("/criar-pedido")
     public ResponseEntity<PagamentoResponseDto> fazerPagamentoDoPedido(@RequestBody @Valid PedidoRequestDto pedidoRequestDto) throws URISyntaxException {
         PagamentoResponseDto pagamentoResponseDto = pagamentoController.fazerPagamentoDoPedido(pedidoRequestDto);
 

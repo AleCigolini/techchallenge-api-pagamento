@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge03.pagamento.application.usecase.impl;
 
 import br.com.fiap.techchallenge03.pagamento.application.gateway.PagamentoGateway;
+import br.com.fiap.techchallenge03.pagamento.application.usecase.ConfirmarPagamentoPedidoUseCase;
 import br.com.fiap.techchallenge03.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallenge03.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallenge03.pagamento.domain.Pagamento;
@@ -13,15 +14,18 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
 
     private final PagamentoGateway pagamentoGateway;
     private final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase;
+    private final ConfirmarPagamentoPedidoUseCase confirmarPagamentoPedidoUseCase;
 
     @Value("${mercado-pago.ativo}")
     private boolean isMercadoPagoAtivo;
 
     public SalvarPagamentoUseCaseImpl(
             PagamentoGateway pagamentoGateway,
-            CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase) {
+            CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase,
+            ConfirmarPagamentoPedidoUseCase confirmarPagamentoPedidoUseCase) {
         this.pagamentoGateway = pagamentoGateway;
         this.criarPedidoMercadoPagoUseCase = criarPedidoMercadoPagoUseCase;
+        this.confirmarPagamentoPedidoUseCase = confirmarPagamentoPedidoUseCase;
     }
 
     @Override
@@ -33,7 +37,7 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
         if (isMercadoPagoAtivo) {
             Pagamento pagamento = new Pagamento();
             pagamento.setPreco(pedido.getPreco());
-            pagamento.setCodigoPedido(pedido.getId());
+            pagamento.setCodigoPedido(pedido.getCodigoPedido());
 
             pagamento.setStatus(!criouPedidoMercadoPago ?
                     StatusPagamentoEnum.REJEITADO.toString() :
@@ -45,8 +49,13 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
     }
 
     @Override
-    public Pagamento atualizarStatusPagamento(String id, String novoStatus) {
-        return pagamentoGateway.atualizarStatusPagamento(id, novoStatus)
+    public Pagamento atualizarStatusPagamento(String id, StatusPagamentoEnum novoStatus) {
+        Pagamento pagamento = pagamentoGateway.atualizarStatusPagamento(id, novoStatus.getStatus())
                 .orElse(null);
+
+        if (pagamento != null && novoStatus == StatusPagamentoEnum.APROVADO) {
+            confirmarPagamentoPedidoUseCase.confirmarPagamentoPedido(pagamento);
+        }
+        return pagamento;
     }
 }

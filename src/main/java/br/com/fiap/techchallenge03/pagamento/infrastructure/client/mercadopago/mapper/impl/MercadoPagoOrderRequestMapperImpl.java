@@ -21,7 +21,7 @@ public class MercadoPagoOrderRequestMapperImpl implements MercadoPagoOrderReques
         pedido.getProdutos().forEach(produto -> {
             BigDecimal totalPrecoItem = produto.getPreco().multiply(BigDecimal.valueOf(produto.getQuantidade()));
             MercadoPagoOrderItemRequest mercadoPagoOrderItemRequest = MercadoPagoOrderItemRequest.builder()
-                    .skuNumber(produto.getId())
+                    .skuNumber(produto.getCodigoProduto())
                     .category(produto.getCategoria())
                     .title(produto.getNome())
                     .description(produto.getDescricao())
@@ -34,7 +34,7 @@ public class MercadoPagoOrderRequestMapperImpl implements MercadoPagoOrderReques
         });
 
         return MercadoPagoOrderRequest.builder()
-                .externalReference(pedido.getId())
+                .externalReference(pedido.getCodigo())
                 .title(pedido.getCodigo())
                 .description(pedido.getObservacao())
                 .totalAmount(pedido.getPreco())

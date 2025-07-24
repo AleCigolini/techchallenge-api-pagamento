@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class ProdutoRequestDto {
 
     @NotBlank
-    private String id;
+    private String codigoProduto;
 
     @NotBlank
     private String nome;

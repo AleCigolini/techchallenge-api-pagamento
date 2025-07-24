@@ -53,10 +53,10 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t alecigolini/fiap-techchallengeapipagamento:latest .
+        run: docker build -t alecigolini/fiap-techchallenge03:latest .
 
       - name: Push Docker image
-        run: docker push alecigolini/fiap-techchallengeapipagamento:latest
+        run: docker push alecigolini/fiap-techchallenge03:latest
 
       - name: Azure Login
         uses: azure/login@v2

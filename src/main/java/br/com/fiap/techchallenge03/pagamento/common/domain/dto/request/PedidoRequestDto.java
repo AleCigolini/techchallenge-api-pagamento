@@ -15,7 +15,7 @@ import java.util.List;
 public class PedidoRequestDto {
 
     @NotBlank
-    private String id;
+    private String codigoPedido;
 
     @NotBlank(message = "O código do pedido é obrigatório")
     @Schema(description = "Código do pedido", example = "PED123", required = true)
@@ -29,7 +29,8 @@ public class PedidoRequestDto {
     @Schema(description = "Valor do pagamento", example = "59.90", required = true)
     private BigDecimal preco;
 
-//    private ClienteRequestDto cliente;
+    @NotBlank
+    private String codigoCliente;
 
     @NotEmpty
     private List<ProdutoRequestDto> produtos;

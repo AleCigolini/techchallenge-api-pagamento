@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 public class Produto extends DominioBase {
 
-    private String id;
+    private String codigoProduto;
     private String nome;
     private String descricao;
     private String categoria;

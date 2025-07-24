@@ -6,20 +6,16 @@ import br.com.fiap.techchallenge03.pagamento.application.gateway.PagamentoGatewa
 import br.com.fiap.techchallenge03.pagamento.application.gateway.impl.PagamentoGatewayImpl;
 import br.com.fiap.techchallenge03.pagamento.application.mapper.RequestPagamentoMapper;
 import br.com.fiap.techchallenge03.pagamento.application.presenter.PagamentoPresenter;
-import br.com.fiap.techchallenge03.pagamento.application.usecase.ConsultarPagamentoUseCase;
-import br.com.fiap.techchallenge03.pagamento.application.usecase.ConsultarQrCodePagamentoUseCase;
-import br.com.fiap.techchallenge03.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
-import br.com.fiap.techchallenge03.pagamento.application.usecase.SalvarPagamentoUseCase;
-import br.com.fiap.techchallenge03.pagamento.application.usecase.impl.ConsultarPagamentoUseCaseImpl;
-import br.com.fiap.techchallenge03.pagamento.application.usecase.impl.ConsultarQrCodePagamentoUseCaseImpl;
-import br.com.fiap.techchallenge03.pagamento.application.usecase.impl.CriarPedidoMercadoPagoUseCaseImpl;
-import br.com.fiap.techchallenge03.pagamento.application.usecase.impl.SalvarPagamentoUseCaseImpl;
+import br.com.fiap.techchallenge03.pagamento.application.usecase.*;
+import br.com.fiap.techchallenge03.pagamento.application.usecase.impl.*;
 import br.com.fiap.techchallenge03.pagamento.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallenge03.pagamento.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge03.pagamento.common.interfaces.PagamentoDatabase;
+import br.com.fiap.techchallenge03.pagamento.domain.StatusPagamentoEnum;
 import br.com.fiap.techchallenge03.pagamento.infrastructure.client.mercadopago.MercadoPagoCodigoQRClient;
 import br.com.fiap.techchallenge03.pagamento.infrastructure.client.mercadopago.MercadoPagoPosClient;
 import br.com.fiap.techchallenge03.pagamento.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
+import br.com.fiap.techchallenge03.pagamento.infrastructure.client.pedido.PedidoClient;
 import org.springframework.stereotype.Component;
 
 import java.awt.image.BufferedImage;
@@ -38,15 +34,17 @@ public class PagamentoControllerImpl implements PagamentoController {
             PagamentoPresenter pagamentoPresenter,
             RequestPagamentoMapper requestPagamentoMapper,
             PagamentoDatabase pagamentoDatabase,
+            PedidoClient pedidoClient,
             MercadoPagoOrderRequestMapper mercadoPagoOrderRequestMapper,
             MercadoPagoCodigoQRClient mercadoPagoCodigoQRClient,
             MercadoPagoPosClient mercadoPagoPosClient,
             MercadoPagoProperties mercadoPagoProperties
     ) {
         final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase = new CriarPedidoMercadoPagoUseCaseImpl(mercadoPagoOrderRequestMapper, mercadoPagoCodigoQRClient, mercadoPagoProperties);
+        final ConfirmarPagamentoPedidoUseCase confirmarPagamentoPedidoUseCase = new ConfirmarPagamentoPedidoUseCaseImpl(pedidoClient);
         final PagamentoGateway pagamentoGateway = new PagamentoGatewayImpl(pagamentoDatabase, mercadoPagoPosClient, mercadoPagoProperties);
 
-        this.salvarPagamentoUseCase = new SalvarPagamentoUseCaseImpl(pagamentoGateway, criarPedidoMercadoPagoUseCase);
+        this.salvarPagamentoUseCase = new SalvarPagamentoUseCaseImpl(pagamentoGateway, criarPedidoMercadoPagoUseCase, confirmarPagamentoPedidoUseCase);
         this.consultarPagamentoUseCase = new ConsultarPagamentoUseCaseImpl(pagamentoGateway);
         this.consultarQrCodePagamentoUseCase = new ConsultarQrCodePagamentoUseCaseImpl(mercadoPagoPosClient, mercadoPagoProperties);
         this.pagamentoPresenter = pagamentoPresenter;
@@ -80,7 +78,6 @@ public class PagamentoControllerImpl implements PagamentoController {
     @Override
     public PagamentoResponseDto atualizarStatusPagamento(String id, String novoStatus) {
         return pagamentoPresenter.pagamentoParaPagamentoResponseDTO(
-                salvarPagamentoUseCase.atualizarStatusPagamento(id, novoStatus));
-
+                salvarPagamentoUseCase.atualizarStatusPagamento(id, StatusPagamentoEnum.fromString(novoStatus)));
     }
 }
