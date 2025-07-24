@@ -31,7 +31,7 @@ client:
 logging:
   level:
     org.springframework.data.mongodb: DEBUG
-    br.com.fiap.techchallenge03: DEBUG
+    br.com.fiap.techchallengeapipagamento: DEBUG
 
 server:
   port: 8080

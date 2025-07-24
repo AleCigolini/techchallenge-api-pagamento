@@ -2,7 +2,7 @@ spring:
   profiles:
     active: dev
   application:
-    name: techchallenge03
+    name: techchallengeapipagamento
   data:
     mongodb:
       database: tech_challenge_pagamentos
