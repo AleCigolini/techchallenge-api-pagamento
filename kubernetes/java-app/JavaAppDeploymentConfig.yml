@@ -62,26 +62,6 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: MP_AUTH_HEADER
-            - name: AZURE_ENTRA_ID_TENANT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: ENTRA_ID_TENANT_ID
-            - name: AZURE_ENTRA_ID_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: ENTRA_ID_CLIENT_ID
-            - name: AZURE_ENTRA_ID_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: ENTRA_ID_CLIENT_SECRET
-            - name: AZURE_ENTRA_ID_TENANT_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: ENTRA_ID_TENANT_NAME
           resources:
             requests:
               cpu: "400m"
@@ -114,30 +94,6 @@ spec:
   selector:
     app: java-app
   type: ClusterIP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: java-app
-  annotations:
-    cert-manager.io/issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-spec:
-  ingressClassName: nginx
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: java-app
-                port:
-                  number: 80
-  tls:
-    - hosts:
-        - techchallenge.app.br
-      secretName: meu-certificado-tls
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler

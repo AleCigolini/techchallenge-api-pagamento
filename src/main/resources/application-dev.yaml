@@ -35,10 +35,3 @@ logging:
 
 server:
   port: 8080
-
-azure:
-  entra-id:
-    tenant-id: "12"
-    tenant-name: "12"
-    client-id: "12"
-    client-secret: "12"

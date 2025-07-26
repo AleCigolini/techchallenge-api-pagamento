@@ -21,12 +21,5 @@ tag:
       name: "Pagamento"
       description: "API de Pagamentos"
 
-azure:
-  entra-id:
-    tenant-id: "${AZURE_ENTRA_ID_TENANT_ID}"
-    tenant-name: "${AZURE_ENTRA_ID_TENANT_NAME}"
-    client-id: "${AZURE_ENTRA_ID_CLIENT_ID}"
-    client-secret: "${AZURE_ENTRA_ID_CLIENT_SECRET}"
-
 mercado-pago:
   ativo: "${MERCADO_PAGO_ATIVO:false}"

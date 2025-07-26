@@ -19,7 +19,7 @@ spring:
         enabled: true
         fail-fast: true
 client:
-  poedido:
+  pedido :
     base-url: "http://localhost-prod:8080/pedidos"
   mercado-pago:
     user_id: 2333300249
@@ -27,9 +27,3 @@ client:
     external_store_id: "FIAP001"
     external_pos_id: "FIAP001CAIXA001"
     auth_header: "Bearer APP_USR-3275293218198108-031718-5526fd48d54fa3cf79471546ff5bec1f-2333300249"
-azure:
-  entra-id:
-    tenant-id: "12"
-    tenant-name: "12"
-    client-id: "12"
-    client-secret: "12"
