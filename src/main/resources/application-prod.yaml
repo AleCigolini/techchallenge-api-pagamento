@@ -1,0 +1,29 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_USER:admin}:${MONGO_PASSWORD:admin123}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/tech_challenge_pagamentos?authSource=admin
+      auto-index-creation: true
+      connection-pool:
+        max-size: 50
+        min-size: 5
+        max-wait-time: 3000
+        max-life-time: 0
+      connect-timeout: 3000
+      socket-timeout: 5000
+      server-selection-timeout: 5000
+      retry-writes: true
+      ssl:
+        enabled: false
+      health:
+        timeout: 3000
+        enabled: true
+        fail-fast: true
+client:
+  pedido :
+    base-url: "http://localhost-prod:8080/pedidos"
+  mercado-pago:
+    user_id: 2333300249
+    pos_id: 111092408
+    external_store_id: "FIAP001"
+    external_pos_id: "FIAP001CAIXA001"
+    auth_header: "Bearer APP_USR-3275293218198108-031718-5526fd48d54fa3cf79471546ff5bec1f-2333300249"
