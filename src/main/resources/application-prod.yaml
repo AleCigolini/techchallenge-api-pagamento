@@ -20,7 +20,7 @@ spring:
         fail-fast: true
 client:
   pedido :
-    base-url: "http://java_app_pedido_produto/pedidos"
+    base-url: "http://java-app-pedido-produto/pedidos"
   mercado-pago:
     user_id: 2333300249
     pos_id: 111092408
