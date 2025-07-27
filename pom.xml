@@ -94,15 +94,12 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>4.1.4</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
         <dependency>
-            <groupId>com.microsoft.graph</groupId>
-            <artifactId>microsoft-graph</artifactId>
-            <version>6.39.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.azure</groupId>
-            <artifactId>azure-identity</artifactId>
-            <version>1.16.1</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.18.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -118,9 +115,6 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
-                    <compilerArgs>
-                        <arg>--enable-preview</arg>
-                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

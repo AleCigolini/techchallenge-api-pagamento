@@ -1,7 +1,7 @@
 package br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.service;
 
 import br.com.fiap.techchallengeapipagamento.pagamento.domain.Pagamento;
-import br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.repository.mongodb.PagamentoMongoRepository;
+import br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.database.repository.mongodb.PagamentoMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
