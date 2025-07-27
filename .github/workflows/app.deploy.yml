@@ -41,7 +41,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=AleCigolini_techchallenge-api-pagamento \
+            -Dsonar.projectKey=AleCigolini_techchallengeapipagamento \
             -Dsonar.organization=pos-fiap-techchallenge \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.coverage.jacoco.xmlReportPaths=target/app/jacoco/jacoco.xml \
