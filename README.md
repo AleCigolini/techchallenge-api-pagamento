@@ -49,3 +49,22 @@ O projeto segue uma arquitetura moderna e organizada, contendo:
    docker-compose up
    ```
 4. Acesse `http://localhost:8080` e terá acesso ao Swagger da aplicação
+
+## BDD - Behavior-Driven Development
+Funcionalidade: Integração com serviço de pedido
+
+Como sistema de pagamentos
+<br>
+Quero que, ao pagamento ser realizado com sucesso, o serviço de pagamento informe o serviço de pedidos 
+<br>
+Para a atualização do status do pedido
+
+Cenário: Realização do pagamento com sucesso
+<br>
+Dado que o pagamento foi efetuado através do QR code do estabelecimento via Mercado Pago
+<br>
+Quando o serviço do Mercado Pago retorna sucesso ao realizar a compra
+<br>
+Então o status do pagamento é atualizado para aprovado
+<br>
+E o código do pagamento é enviado para o serviço de pedidos 
