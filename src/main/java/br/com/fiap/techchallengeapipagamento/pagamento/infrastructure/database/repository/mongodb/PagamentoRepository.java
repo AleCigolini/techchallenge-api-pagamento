@@ -1,4 +1,4 @@
-package br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.repository.mongodb;
+package br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.database.repository.mongodb;
 
 import br.com.fiap.techchallengeapipagamento.pagamento.domain.Pagamento;
 import org.springframework.data.mongodb.repository.MongoRepository;

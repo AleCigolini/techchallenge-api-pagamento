@@ -2,7 +2,7 @@ package br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.database.
 
 import br.com.fiap.techchallengeapipagamento.pagamento.common.interfaces.PagamentoDatabase;
 import br.com.fiap.techchallengeapipagamento.pagamento.domain.Pagamento;
-import br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.repository.mongodb.PagamentoRepository;
+import br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.database.repository.mongodb.PagamentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
