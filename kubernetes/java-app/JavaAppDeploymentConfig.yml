@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: java-app
+  name: java-app-pagamento
 spec:
   replicas: 1
   strategy:
@@ -11,14 +11,14 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: java-app
+      app: java-app-pagamento
   template:
     metadata:
       labels:
-        app: java-app
+        app: java-app-pagamento
     spec:
       containers:
-        - name: java-app
+        - name: java-app-pagamento
           image: alecigolini/fiap-techchallengeapipagamento:latest
           ports:
             - containerPort: 8081
@@ -82,7 +82,7 @@ spec:
       port: 80
       targetPort: 8081
   selector:
-    app: java-app
+    app: java-app-pagamento
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
@@ -98,7 +98,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: java-app
+                name: java-app-pagamento
                 port:
                   number: 80
 ---
@@ -113,7 +113,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind:  Deployment
-    name: java-app
+    name: java-app-pagamento
   metrics:
     - type: Resource
       resource:
