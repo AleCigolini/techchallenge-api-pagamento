@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: java-app
+  name: java-app-pagamento
 spec:
   replicas: 1
   strategy:
@@ -11,32 +11,22 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: java-app
+      app: java-app-pagamento
   template:
     metadata:
       labels:
-        app: java-app
+        app: java-app-pagamento
     spec:
       containers:
-        - name: java-app
+        - name: java-app-pagamento
           image: alecigolini/fiap-techchallengeapipagamento:latest
           ports:
             - containerPort: 8081
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: prod
-            - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://pagamento-dev.postgres.database.azure.com:5432/pagamento
-            - name: SPRING_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: POSTGRES_USER
-            - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: POSTGRES_PASSWORD
+            - name: SPRING_DATA_MONGODB_URI
+              value: mongodb://pagamento-dev-mongo:Xd2Ixx86dp6OmhLKDhNMq6sa1SxnxhHx7a8t2fSLmBhGPh4AdLK7mvp8Cmiv51x5Z8cgzqlXy4qlACDbhRf7hQ==@pagamento-dev-mongo.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@pagamento-dev-mongo@
             - name: CLIENT_MERCADO_PAGO_USER_ID
               valueFrom:
                 secretKeyRef:
@@ -85,15 +75,32 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: java-app
+  name: java-app-pagamento
 spec:
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8081
   selector:
-    app: java-app
+    app: java-app-pagamento
   type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: java-app-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /pagamentos
+            pathType: Prefix
+            backend:
+              service:
+                name: java-app-pagamento
+                port:
+                  number: 80
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -106,7 +113,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind:  Deployment
-    name: java-app
+    name: java-app-pagamento
   metrics:
     - type: Resource
       resource:
