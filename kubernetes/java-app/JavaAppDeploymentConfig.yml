@@ -25,18 +25,8 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: prod
-            - name: SPRING_DATASOURCE_URL
+            - name: SPRING_DATA_MONGODB_URI
               value: mongodb://pagamento-dev-mongo:Xd2Ixx86dp6OmhLKDhNMq6sa1SxnxhHx7a8t2fSLmBhGPh4AdLK7mvp8Cmiv51x5Z8cgzqlXy4qlACDbhRf7hQ==@pagamento-dev-mongo.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@pagamento-dev-mongo@
-            - name: SPRING_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: POSTGRES_USER
-            - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: POSTGRES_PASSWORD
             - name: CLIENT_MERCADO_PAGO_USER_ID
               valueFrom:
                 secretKeyRef:
