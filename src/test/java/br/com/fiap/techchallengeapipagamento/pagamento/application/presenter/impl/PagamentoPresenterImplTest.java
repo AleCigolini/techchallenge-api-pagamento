@@ -42,14 +42,12 @@ class PagamentoPresenterImplTest {
         pagamento.setCodigoPedido("ped-456");
         pagamento.setPreco(new BigDecimal("50.00"));
         pagamento.setStatus("APROVADO");
-        pagamento.setDataCriacao(OffsetDateTime.now());
 
         pagamentoResponseDto = new PagamentoResponseDto();
         pagamentoResponseDto.setId("pag-123");
         pagamentoResponseDto.setCodigoPedido("ped-456");
         pagamentoResponseDto.setPreco(new BigDecimal("50.00"));
         pagamentoResponseDto.setStatus("APROVADO");
-        pagamentoResponseDto.setDataCriacao(pagamento.getDataCriacao());
     }
 
     @Test
@@ -68,7 +66,6 @@ class PagamentoPresenterImplTest {
         assertEquals(pagamentoResponseDto.getCodigoPedido(), resultado.getCodigoPedido());
         assertEquals(pagamentoResponseDto.getPreco(), resultado.getPreco());
         assertEquals(pagamentoResponseDto.getStatus(), resultado.getStatus());
-        assertEquals(pagamentoResponseDto.getDataCriacao(), resultado.getDataCriacao());
 
         verify(modelMapper, times(1)).map(pagamento, PagamentoResponseDto.class);
     }
@@ -82,14 +79,12 @@ class PagamentoPresenterImplTest {
         pagamento2.setCodigoPedido("ped-321");
         pagamento2.setPreco(new BigDecimal("75.50"));
         pagamento2.setStatus("PENDENTE");
-        pagamento2.setDataCriacao(OffsetDateTime.now().minusHours(1));
 
         PagamentoResponseDto pagamentoResponseDto2 = new PagamentoResponseDto();
         pagamentoResponseDto2.setId("pag-789");
         pagamentoResponseDto2.setCodigoPedido("ped-321");
         pagamentoResponseDto2.setPreco(new BigDecimal("75.50"));
         pagamentoResponseDto2.setStatus("PENDENTE");
-        pagamentoResponseDto2.setDataCriacao(pagamento2.getDataCriacao());
 
         List<Pagamento> pagamentos = Arrays.asList(pagamento, pagamento2);
 
@@ -162,14 +157,12 @@ class PagamentoPresenterImplTest {
         pagamentoComNulos.setCodigoPedido(null);
         pagamentoComNulos.setPreco(null);
         pagamentoComNulos.setStatus(null);
-        pagamentoComNulos.setDataCriacao(null);
 
         PagamentoResponseDto responseComNulos = new PagamentoResponseDto();
         responseComNulos.setId("pag-nulo");
         responseComNulos.setCodigoPedido(null);
         responseComNulos.setPreco(null);
         responseComNulos.setStatus(null);
-        responseComNulos.setDataCriacao(null);
 
         when(modelMapper.map(pagamentoComNulos, PagamentoResponseDto.class))
                 .thenReturn(responseComNulos);
@@ -183,7 +176,6 @@ class PagamentoPresenterImplTest {
         assertNull(resultado.getCodigoPedido());
         assertNull(resultado.getPreco());
         assertNull(resultado.getStatus());
-        assertNull(resultado.getDataCriacao());
 
         verify(modelMapper, times(1)).map(pagamentoComNulos, PagamentoResponseDto.class);
     }
@@ -197,14 +189,12 @@ class PagamentoPresenterImplTest {
         pagamentoZero.setCodigoPedido("ped-zero");
         pagamentoZero.setPreco(BigDecimal.ZERO);
         pagamentoZero.setStatus("GRATUITO");
-        pagamentoZero.setDataCriacao(OffsetDateTime.now());
 
         PagamentoResponseDto responseZero = new PagamentoResponseDto();
         responseZero.setId("pag-zero");
         responseZero.setCodigoPedido("ped-zero");
         responseZero.setPreco(BigDecimal.ZERO);
         responseZero.setStatus("GRATUITO");
-        responseZero.setDataCriacao(pagamentoZero.getDataCriacao());
 
         when(modelMapper.map(pagamentoZero, PagamentoResponseDto.class))
                 .thenReturn(responseZero);

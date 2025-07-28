@@ -20,6 +20,5 @@ db.pagamentos.createIndex({ "status": 1 });
 db.pagamentos.insertOne({
     codigoPedido: "PED001",
     preco: NumberDecimal("59.90"),
-    status: "PENDENTE",
-    dataCriacao: new Date()
+    status: "PENDENTE"
 });

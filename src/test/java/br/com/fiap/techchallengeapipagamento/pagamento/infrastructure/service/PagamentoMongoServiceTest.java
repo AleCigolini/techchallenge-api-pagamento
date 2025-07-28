@@ -42,48 +42,6 @@ class PagamentoMongoServiceTest {
     }
 
     @Test
-    @DisplayName("Deve salvar pagamento definindo data de criação quando nula")
-    void deveSalvarPagamentoDefinindoDataCriacaoQuandoNula() {
-        // Given
-        OffsetDateTime antes = OffsetDateTime.now();
-        pagamento.setDataCriacao(null);
-
-        when(pagamentoRepository.save(any(Pagamento.class))).thenAnswer(invocation -> invocation.getArgument(0));
-
-        // When
-        Pagamento resultado = pagamentoService.salvar(pagamento);
-
-        OffsetDateTime depois = OffsetDateTime.now();
-
-        // Then
-        assertNotNull(resultado);
-        assertNotNull(resultado.getDataCriacao());
-        assertTrue(resultado.getDataCriacao().isAfter(antes) || resultado.getDataCriacao().isEqual(antes));
-        assertTrue(resultado.getDataCriacao().isBefore(depois) || resultado.getDataCriacao().isEqual(depois));
-
-        verify(pagamentoRepository, times(1)).save(pagamento);
-    }
-
-    @Test
-    @DisplayName("Deve salvar pagamento mantendo data de criação existente")
-    void deveSalvarPagamentoMantendoDataCriacaoExistente() {
-        // Given
-        OffsetDateTime dataExistente = OffsetDateTime.now().minusHours(1);
-        pagamento.setDataCriacao(dataExistente);
-
-        when(pagamentoRepository.save(any(Pagamento.class))).thenAnswer(invocation -> invocation.getArgument(0));
-
-        // When
-        Pagamento resultado = pagamentoService.salvar(pagamento);
-
-        // Then
-        assertNotNull(resultado);
-        assertEquals(dataExistente, resultado.getDataCriacao());
-
-        verify(pagamentoRepository, times(1)).save(pagamento);
-    }
-
-    @Test
     @DisplayName("Deve buscar pagamentos por pedido ID com sucesso")
     void deveBuscarPagamentosPorPedidoIdComSucesso() {
         // Given
@@ -132,7 +90,6 @@ class PagamentoMongoServiceTest {
         pagamentoCompleto.setCodigoPedido("ped-completo");
         pagamentoCompleto.setPreco(new BigDecimal("99.99"));
         pagamentoCompleto.setStatus("PENDENTE");
-        pagamentoCompleto.setDataCriacao(null);
 
         when(pagamentoRepository.save(any(Pagamento.class))).thenReturn(pagamentoCompleto);
 
@@ -145,7 +102,6 @@ class PagamentoMongoServiceTest {
         assertEquals("ped-completo", resultado.getCodigoPedido());
         assertEquals(new BigDecimal("99.99"), resultado.getPreco());
         assertEquals("PENDENTE", resultado.getStatus());
-        assertNotNull(resultado.getDataCriacao());
 
         verify(pagamentoRepository, times(1)).save(pagamentoCompleto);
     }
@@ -173,37 +129,6 @@ class PagamentoMongoServiceTest {
 
         verify(pagamentoRepository, times(1)).findByCodigoPedido(pedidoId1);
         verify(pagamentoRepository, times(1)).findByCodigoPedido(pedidoId2);
-    }
-
-    @Test
-    @DisplayName("Deve definir data de criação precisamente no momento do salvamento")
-    void deveDefinirDataCriacaoPrecisamenteNoMomentoDoSalvamento() {
-        // Given
-        Pagamento pagamentoSemData = new Pagamento();
-        pagamentoSemData.setId("pag-sem-data");
-        pagamentoSemData.setCodigoPedido("ped-sem-data");
-        pagamentoSemData.setPreco(new BigDecimal("25.00"));
-        pagamentoSemData.setDataCriacao(null);
-
-        OffsetDateTime antesDoChamado = OffsetDateTime.now();
-
-        when(pagamentoRepository.save(any(Pagamento.class))).thenAnswer(invocation -> {
-            Pagamento arg = invocation.getArgument(0);
-            // Simula que o repository salva e retorna o mesmo objeto
-            return arg;
-        });
-
-        // When
-        Pagamento resultado = pagamentoService.salvar(pagamentoSemData);
-
-        OffsetDateTime depoisDoChamado = OffsetDateTime.now();
-
-        // Then
-        assertNotNull(resultado.getDataCriacao());
-        assertTrue(resultado.getDataCriacao().isAfter(antesDoChamado) ||
-                  resultado.getDataCriacao().isEqual(antesDoChamado));
-        assertTrue(resultado.getDataCriacao().isBefore(depoisDoChamado) ||
-                  resultado.getDataCriacao().isEqual(depoisDoChamado));
     }
 
     @Test
@@ -242,7 +167,6 @@ class PagamentoMongoServiceTest {
         pagamentoOriginal.setCodigoPedido("ped-integridade");
         pagamentoOriginal.setPreco(new BigDecimal("33.33"));
         pagamentoOriginal.setStatus("REJEITADO");
-        pagamentoOriginal.setDataCriacao(null);
 
         when(pagamentoRepository.save(any(Pagamento.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -254,6 +178,5 @@ class PagamentoMongoServiceTest {
         assertEquals("ped-integridade", resultado.getCodigoPedido());
         assertEquals(new BigDecimal("33.33"), resultado.getPreco());
         assertEquals("REJEITADO", resultado.getStatus());
-        assertNotNull(resultado.getDataCriacao()); // Data foi definida pelo service
     }
 }

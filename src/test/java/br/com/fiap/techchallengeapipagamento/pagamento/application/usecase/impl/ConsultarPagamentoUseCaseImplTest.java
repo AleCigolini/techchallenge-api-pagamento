@@ -39,14 +39,12 @@ class ConsultarPagamentoUseCaseImplTest {
         pagamento1.setCodigoPedido("ped-001");
         pagamento1.setPreco(new BigDecimal("50.00"));
         pagamento1.setStatus("APROVADO");
-        pagamento1.setDataCriacao(OffsetDateTime.now());
 
         pagamento2 = new Pagamento();
         pagamento2.setId("pag-002");
         pagamento2.setCodigoPedido("ped-001");
         pagamento2.setPreco(new BigDecimal("25.50"));
         pagamento2.setStatus("PENDENTE");
-        pagamento2.setDataCriacao(OffsetDateTime.now().minusHours(1));
     }
 
     @AfterEach

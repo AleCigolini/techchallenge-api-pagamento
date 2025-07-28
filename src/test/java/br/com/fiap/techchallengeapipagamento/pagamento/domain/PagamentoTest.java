@@ -27,21 +27,18 @@ class PagamentoTest {
         String codigoPedido = "ped-456";
         BigDecimal preco = new BigDecimal("50.00");
         String status = "APROVADO";
-        OffsetDateTime dataCriacao = OffsetDateTime.now();
 
         // When
         pagamento.setId(id);
         pagamento.setCodigoPedido(codigoPedido);
         pagamento.setPreco(preco);
         pagamento.setStatus(status);
-        pagamento.setDataCriacao(dataCriacao);
 
         // Then
         assertEquals(id, pagamento.getId());
         assertEquals(codigoPedido, pagamento.getCodigoPedido());
         assertEquals(preco, pagamento.getPreco());
         assertEquals(status, pagamento.getStatus());
-        assertEquals(dataCriacao, pagamento.getDataCriacao());
     }
 
     @Test
@@ -52,14 +49,12 @@ class PagamentoTest {
         pagamento.setCodigoPedido(null);
         pagamento.setPreco(null);
         pagamento.setStatus(null);
-        pagamento.setDataCriacao(null);
 
         // Then
         assertNull(pagamento.getId());
         assertNull(pagamento.getCodigoPedido());
         assertNull(pagamento.getPreco());
         assertNull(pagamento.getStatus());
-        assertNull(pagamento.getDataCriacao());
     }
 
     @Test
@@ -174,21 +169,6 @@ class PagamentoTest {
             pagamento.setCodigoPedido(codigo);
             assertEquals(codigo, pagamento.getCodigoPedido());
         }
-    }
-
-    @Test
-    @DisplayName("Deve aceitar data de criação no passado e futuro")
-    void deveAceitarDataCriacaoNoPassadoEFuturo() {
-        // Given
-        OffsetDateTime dataPassado = OffsetDateTime.now().minusDays(1);
-        OffsetDateTime dataFuturo = OffsetDateTime.now().plusDays(1);
-
-        // When & Then
-        pagamento.setDataCriacao(dataPassado);
-        assertEquals(dataPassado, pagamento.getDataCriacao());
-
-        pagamento.setDataCriacao(dataFuturo);
-        assertEquals(dataFuturo, pagamento.getDataCriacao());
     }
 
     @Test

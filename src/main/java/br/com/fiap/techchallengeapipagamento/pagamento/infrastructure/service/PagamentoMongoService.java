@@ -15,9 +15,6 @@ public class PagamentoMongoService {
     private final PagamentoMongoRepository pagamentoRepository;
 
     public Pagamento salvar(Pagamento pagamento) {
-        if (pagamento.getDataCriacao() == null) {
-            pagamento.setDataCriacao(OffsetDateTime.now());
-        }
         return pagamentoRepository.save(pagamento);
     }
 
