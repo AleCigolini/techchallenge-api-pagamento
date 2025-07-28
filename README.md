@@ -50,6 +50,9 @@ O projeto segue uma arquitetura moderna e organizada, contendo:
    ```
 4. Acesse `http://localhost:8080` e terá acesso ao Swagger da aplicação
 
+## Cobertura Sonar
+![sonar.png](src/main/resources/static/sonar.png)
+
 ## BDD - Behavior-Driven Development
 Funcionalidade: Integração com serviço de pedido
 
