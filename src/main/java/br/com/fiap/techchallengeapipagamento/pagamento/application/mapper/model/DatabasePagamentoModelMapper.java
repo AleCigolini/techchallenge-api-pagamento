@@ -16,16 +16,16 @@ public class DatabasePagamentoModelMapper implements DatabasePagamentoMapper {
 
     @Override
     public List<Pagamento> jpaPagamentosEntityParaPagamentos(List<Pagamento> jpaPagamentoEntities) {
-        return jpaPagamentoEntities.stream().map(jpaPagamentoEntity -> modelMapper.map(jpaPagamentoEntity, Pagamento.class)).toList();
+        return jpaPagamentoEntities.stream().map(pagamentoEntity -> modelMapper.map(pagamentoEntity, Pagamento.class)).toList();
     }
 
     @Override
-    public Pagamento pagamentoParaJpaPagamentoEntity(Pagamento pagamento) {
+    public Pagamento pagamentoParaPagamentoEntity(Pagamento pagamento) {
         return modelMapper.map(pagamento, Pagamento.class);
     }
 
     @Override
-    public Pagamento jpaPagamentoEntityParaPagamento(Pagamento jpaPagamentoEntity) {
-        return modelMapper.map(jpaPagamentoEntity, Pagamento.class);
+    public Pagamento pagamentoEntityParaPagamento(Pagamento pagamentoEntity) {
+        return modelMapper.map(pagamentoEntity, Pagamento.class);
     }
 }

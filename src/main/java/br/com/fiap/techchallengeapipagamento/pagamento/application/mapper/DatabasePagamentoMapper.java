@@ -8,7 +8,7 @@ public interface DatabasePagamentoMapper {
 
     List<Pagamento> jpaPagamentosEntityParaPagamentos(List<Pagamento> jpaPagamentoEntities);
 
-    Pagamento pagamentoParaJpaPagamentoEntity(Pagamento pagamento);
+    Pagamento pagamentoParaPagamentoEntity(Pagamento pagamento);
 
-    Pagamento jpaPagamentoEntityParaPagamento(Pagamento jpaPagamentoEntity);
+    Pagamento pagamentoEntityParaPagamento(Pagamento pagamentoEntity);
 }

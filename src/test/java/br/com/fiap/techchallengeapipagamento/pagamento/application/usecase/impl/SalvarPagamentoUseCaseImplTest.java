@@ -54,7 +54,6 @@ class SalvarPagamentoUseCaseImplTest {
         pagamento.setCodigoPedido("ped-123");
         pagamento.setPreco(new BigDecimal("50.00"));
         pagamento.setStatus("PENDENTE");
-        pagamento.setDataCriacao(OffsetDateTime.now());
     }
 
     @Test

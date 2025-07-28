@@ -2,6 +2,7 @@ package br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.database.
 
 import br.com.fiap.techchallengeapipagamento.pagamento.common.interfaces.PagamentoDatabase;
 import br.com.fiap.techchallengeapipagamento.pagamento.domain.Pagamento;
+import br.com.fiap.techchallengeapipagamento.pagamento.domain.StatusPagamentoEnum;
 import br.com.fiap.techchallengeapipagamento.pagamento.infrastructure.database.repository.mongodb.PagamentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,9 +20,8 @@ public class PagamentoMongoDatabaseImpl implements PagamentoDatabase {
     @Override
     public Pagamento salvar(Pagamento pagamento) {
 
-        pagamento.setDataCriacao(OffsetDateTime.now());
         if (pagamento.getStatus() == null) {
-            pagamento.setStatus("PENDENTE");
+            pagamento.setStatus(StatusPagamentoEnum.PENDENTE.name());
         }
         return pagamentoRepository.save(pagamento);
     }

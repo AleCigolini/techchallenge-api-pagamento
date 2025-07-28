@@ -192,7 +192,6 @@ public class PagamentoRestControllerImplTest {
         pagamento.setCodigoPedido(codigoPedido);
         pagamento.setStatus(status);
         pagamento.setPreco(new BigDecimal("59.90"));
-        pagamento.setDataCriacao(OffsetDateTime.now());
         return pagamento;
     }
 
@@ -212,7 +211,6 @@ public class PagamentoRestControllerImplTest {
         private String codigoPedido;
         private BigDecimal preco;
         private String status;
-        private OffsetDateTime dataCriacao;
 
         // Getters e Setters
         public String getId() { return id; }
@@ -223,8 +221,6 @@ public class PagamentoRestControllerImplTest {
         public void setPreco(BigDecimal preco) { this.preco = preco; }
         public String getStatus() { return status; }
         public void setStatus(String status) { this.status = status; }
-        public OffsetDateTime getDataCriacao() { return dataCriacao; }
-        public void setDataCriacao(OffsetDateTime dataCriacao) { this.dataCriacao = dataCriacao; }
     }
 
     public static class MockPedidoRequestDto {

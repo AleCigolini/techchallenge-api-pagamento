@@ -275,7 +275,6 @@ public class PagamentoGatewayImplTest {
         pagamento.setCodigoPedido("PED001");
         pagamento.setPreco(new BigDecimal("25.50"));
         pagamento.setStatus("PENDENTE");
-        pagamento.setDataCriacao(OffsetDateTime.now());
         return pagamento;
     }
 }

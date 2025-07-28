@@ -31,24 +31,22 @@ class DatabasePagamentoModelMapperTest {
     @InjectMocks
     private DatabasePagamentoModelMapper mapper;
 
-    private Pagamento jpaPagamentoEntity;
+    private Pagamento pagamentoEntity;
     private Pagamento pagamentoDomain;
 
     @BeforeEach
     void setUp() {
-        jpaPagamentoEntity = new Pagamento();
-        jpaPagamentoEntity.setId("jpa-001");
-        jpaPagamentoEntity.setCodigoPedido("ped-001");
-        jpaPagamentoEntity.setPreco(new BigDecimal("100.00"));
-        jpaPagamentoEntity.setStatus("APROVADO");
-        jpaPagamentoEntity.setDataCriacao(OffsetDateTime.now());
+        pagamentoEntity = new Pagamento();
+        pagamentoEntity.setId("jpa-001");
+        pagamentoEntity.setCodigoPedido("ped-001");
+        pagamentoEntity.setPreco(new BigDecimal("100.00"));
+        pagamentoEntity.setStatus("APROVADO");
 
         pagamentoDomain = new Pagamento();
         pagamentoDomain.setId("domain-001");
         pagamentoDomain.setCodigoPedido("ped-001");
         pagamentoDomain.setPreco(new BigDecimal("100.00"));
         pagamentoDomain.setStatus("APROVADO");
-        pagamentoDomain.setDataCriacao(jpaPagamentoEntity.getDataCriacao());
     }
 
     @Test
@@ -67,9 +65,9 @@ class DatabasePagamentoModelMapperTest {
         domainPagamento2.setPreco(new BigDecimal("50.00"));
         domainPagamento2.setStatus("PENDENTE");
 
-        List<Pagamento> jpaEntities = Arrays.asList(jpaPagamentoEntity, jpaPagamento2);
+        List<Pagamento> jpaEntities = Arrays.asList(pagamentoEntity, jpaPagamento2);
 
-        when(modelMapper.map(jpaPagamentoEntity, Pagamento.class)).thenReturn(pagamentoDomain);
+        when(modelMapper.map(pagamentoEntity, Pagamento.class)).thenReturn(pagamentoDomain);
         when(modelMapper.map(jpaPagamento2, Pagamento.class)).thenReturn(domainPagamento2);
 
         // When
@@ -81,7 +79,7 @@ class DatabasePagamentoModelMapperTest {
         assertEquals(pagamentoDomain.getId(), resultado.get(0).getId());
         assertEquals(domainPagamento2.getId(), resultado.get(1).getId());
 
-        verify(modelMapper, times(1)).map(jpaPagamentoEntity, Pagamento.class);
+        verify(modelMapper, times(1)).map(pagamentoEntity, Pagamento.class);
         verify(modelMapper, times(1)).map(jpaPagamento2, Pagamento.class);
     }
 
@@ -104,17 +102,17 @@ class DatabasePagamentoModelMapperTest {
     @DisplayName("Deve converter pagamento domain para JPA entity")
     void deveConverterPagamentoDomainParaJpaEntity() {
         // Given
-        when(modelMapper.map(pagamentoDomain, Pagamento.class)).thenReturn(jpaPagamentoEntity);
+        when(modelMapper.map(pagamentoDomain, Pagamento.class)).thenReturn(pagamentoEntity);
 
         // When
-        Pagamento resultado = mapper.pagamentoParaJpaPagamentoEntity(pagamentoDomain);
+        Pagamento resultado = mapper.pagamentoParaPagamentoEntity(pagamentoDomain);
 
         // Then
         assertNotNull(resultado);
-        assertEquals(jpaPagamentoEntity.getId(), resultado.getId());
-        assertEquals(jpaPagamentoEntity.getCodigoPedido(), resultado.getCodigoPedido());
-        assertEquals(jpaPagamentoEntity.getPreco(), resultado.getPreco());
-        assertEquals(jpaPagamentoEntity.getStatus(), resultado.getStatus());
+        assertEquals(pagamentoEntity.getId(), resultado.getId());
+        assertEquals(pagamentoEntity.getCodigoPedido(), resultado.getCodigoPedido());
+        assertEquals(pagamentoEntity.getPreco(), resultado.getPreco());
+        assertEquals(pagamentoEntity.getStatus(), resultado.getStatus());
 
         verify(modelMapper, times(1)).map(pagamentoDomain, Pagamento.class);
     }
@@ -123,10 +121,10 @@ class DatabasePagamentoModelMapperTest {
     @DisplayName("Deve converter JPA entity para pagamento domain")
     void deveConverterJpaEntityParaPagamentoDomain() {
         // Given
-        when(modelMapper.map(jpaPagamentoEntity, Pagamento.class)).thenReturn(pagamentoDomain);
+        when(modelMapper.map(pagamentoEntity, Pagamento.class)).thenReturn(pagamentoDomain);
 
         // When
-        Pagamento resultado = mapper.jpaPagamentoEntityParaPagamento(jpaPagamentoEntity);
+        Pagamento resultado = mapper.pagamentoEntityParaPagamento(pagamentoEntity);
 
         // Then
         assertNotNull(resultado);
@@ -135,15 +133,15 @@ class DatabasePagamentoModelMapperTest {
         assertEquals(pagamentoDomain.getPreco(), resultado.getPreco());
         assertEquals(pagamentoDomain.getStatus(), resultado.getStatus());
 
-        verify(modelMapper, times(1)).map(jpaPagamentoEntity, Pagamento.class);
+        verify(modelMapper, times(1)).map(pagamentoEntity, Pagamento.class);
     }
 
     @Test
     @DisplayName("Deve converter lista com um único elemento")
     void deveConverterListaComUmUnicoElemento() {
         // Given
-        List<Pagamento> jpaEntitiesSingleton = List.of(jpaPagamentoEntity);
-        when(modelMapper.map(jpaPagamentoEntity, Pagamento.class)).thenReturn(pagamentoDomain);
+        List<Pagamento> jpaEntitiesSingleton = List.of(pagamentoEntity);
+        when(modelMapper.map(pagamentoEntity, Pagamento.class)).thenReturn(pagamentoDomain);
 
         // When
         List<Pagamento> resultado = mapper.jpaPagamentosEntityParaPagamentos(jpaEntitiesSingleton);
@@ -153,7 +151,7 @@ class DatabasePagamentoModelMapperTest {
         assertEquals(1, resultado.size());
         assertEquals(pagamentoDomain.getId(), resultado.get(0).getId());
 
-        verify(modelMapper, times(1)).map(jpaPagamentoEntity, Pagamento.class);
+        verify(modelMapper, times(1)).map(pagamentoEntity, Pagamento.class);
     }
 
     @Test
@@ -175,7 +173,7 @@ class DatabasePagamentoModelMapperTest {
         when(modelMapper.map(pagamentoComNulos, Pagamento.class)).thenReturn(resultadoEsperado);
 
         // When
-        Pagamento resultado = mapper.pagamentoParaJpaPagamentoEntity(pagamentoComNulos);
+        Pagamento resultado = mapper.pagamentoParaPagamentoEntity(pagamentoComNulos);
 
         // Then
         assertNotNull(resultado);
@@ -251,7 +249,7 @@ class DatabasePagamentoModelMapperTest {
         when(modelMapper.map(pagamentoZero, Pagamento.class)).thenReturn(resultadoZero);
 
         // When
-        Pagamento resultado = mapper.jpaPagamentoEntityParaPagamento(pagamentoZero);
+        Pagamento resultado = mapper.pagamentoEntityParaPagamento(pagamentoZero);
 
         // Then
         assertNotNull(resultado);

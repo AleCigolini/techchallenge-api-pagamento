@@ -20,7 +20,4 @@ public class PagamentoResponseDto {
 
     @Schema(description = "Status do pagamento", example = "PENDENTE")
     private String status;
-
-    @Schema(description = "Data de criação do pagamento", example = "2025-07-12T10:30:00Z")
-    private OffsetDateTime dataCriacao;
 }

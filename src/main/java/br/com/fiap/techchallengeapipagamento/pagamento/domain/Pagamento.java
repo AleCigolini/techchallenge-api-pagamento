@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 
 @Data
 @Document(collection = "pagamentos")
@@ -21,8 +20,6 @@ public class Pagamento {
     private String codigoPedido;
 
     private BigDecimal preco;
-    private String status;
 
-    @Field("data_criacao")
-    private OffsetDateTime dataCriacao;
+    private String status;
 }

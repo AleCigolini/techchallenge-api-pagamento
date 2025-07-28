@@ -45,8 +45,8 @@ class PagamentoMongoDatabaseImplTest {
     }
 
     @Test
-    @DisplayName("Deve salvar pagamento com data de criação e status padrão")
-    void deveSalvarPagamentoComDataCriacaoEStatusPadrao() {
+    @DisplayName("Deve salvar pagamento com status padrão")
+    void deveSalvarPagamentoComStatusPadrao() {
         // Given
         Pagamento pagamentoSemStatus = new Pagamento();
         pagamentoSemStatus.setId("pag-novo");
@@ -59,7 +59,6 @@ class PagamentoMongoDatabaseImplTest {
         pagamentoSalvo.setCodigoPedido("ped-789");
         pagamentoSalvo.setPreco(new BigDecimal("75.00"));
         pagamentoSalvo.setStatus("PENDENTE");
-        pagamentoSalvo.setDataCriacao(OffsetDateTime.now());
 
         when(pagamentoRepository.save(any(Pagamento.class))).thenReturn(pagamentoSalvo);
 
@@ -69,14 +68,12 @@ class PagamentoMongoDatabaseImplTest {
         // Then
         assertNotNull(resultado);
         assertEquals("PENDENTE", resultado.getStatus());
-        assertNotNull(resultado.getDataCriacao());
 
         ArgumentCaptor<Pagamento> pagamentoCaptor = ArgumentCaptor.forClass(Pagamento.class);
         verify(pagamentoRepository).save(pagamentoCaptor.capture());
 
         Pagamento pagamentoCapturado = pagamentoCaptor.getValue();
         assertEquals("PENDENTE", pagamentoCapturado.getStatus());
-        assertNotNull(pagamentoCapturado.getDataCriacao());
     }
 
     @Test
@@ -97,14 +94,12 @@ class PagamentoMongoDatabaseImplTest {
         // Then
         assertNotNull(resultado);
         assertEquals("APROVADO", resultado.getStatus());
-        assertNotNull(pagamentoComStatus.getDataCriacao()); // Data foi setada
 
         ArgumentCaptor<Pagamento> pagamentoCaptor = ArgumentCaptor.forClass(Pagamento.class);
         verify(pagamentoRepository).save(pagamentoCaptor.capture());
 
         Pagamento pagamentoCapturado = pagamentoCaptor.getValue();
         assertEquals("APROVADO", pagamentoCapturado.getStatus());
-        assertNotNull(pagamentoCapturado.getDataCriacao());
     }
 
     @Test
@@ -276,55 +271,5 @@ class PagamentoMongoDatabaseImplTest {
         assertFalse(resultado.isPresent());
         verify(pagamentoRepository).findById(id);
         verify(pagamentoRepository, never()).save(any());
-    }
-
-    @Test
-    @DisplayName("Deve definir data de criação como tempo atual ao salvar")
-    void deveDefinirDataCriacaoComoTempoAtualAoSalvar() {
-        // Given
-        OffsetDateTime antes = OffsetDateTime.now();
-
-        Pagamento pagamentoNovo = new Pagamento();
-        pagamentoNovo.setId("pag-novo");
-        pagamentoNovo.setCodigoPedido("ped-novo");
-        pagamentoNovo.setPreco(new BigDecimal("25.00"));
-
-        when(pagamentoRepository.save(any(Pagamento.class))).thenAnswer(invocation -> {
-            Pagamento arg = invocation.getArgument(0);
-            return arg;
-        });
-
-        // When
-        pagamentoDatabase.salvar(pagamentoNovo);
-
-        OffsetDateTime depois = OffsetDateTime.now();
-
-        // Then
-        assertNotNull(pagamentoNovo.getDataCriacao());
-        assertTrue(pagamentoNovo.getDataCriacao().isAfter(antes) || pagamentoNovo.getDataCriacao().isEqual(antes));
-        assertTrue(pagamentoNovo.getDataCriacao().isBefore(depois) || pagamentoNovo.getDataCriacao().isEqual(depois));
-    }
-
-    @Test
-    @DisplayName("Deve manter data de criação existente ao salvar")
-    void deveManterDataCriacaoExistenteAoSalvar() {
-        // Given
-        OffsetDateTime dataExistente = OffsetDateTime.now().minusHours(1);
-
-        Pagamento pagamentoExistente = new Pagamento();
-        pagamentoExistente.setId("pag-existente");
-        pagamentoExistente.setCodigoPedido("ped-existente");
-        pagamentoExistente.setPreco(new BigDecimal("30.00"));
-        pagamentoExistente.setDataCriacao(dataExistente);
-
-        when(pagamentoRepository.save(any(Pagamento.class))).thenAnswer(invocation -> invocation.getArgument(0));
-
-        // When
-        pagamentoDatabase.salvar(pagamentoExistente);
-
-        // Then
-        // A data de criação deve ser substituída pela data atual
-        assertNotEquals(dataExistente, pagamentoExistente.getDataCriacao());
-        assertTrue(pagamentoExistente.getDataCriacao().isAfter(dataExistente));
     }
 }
