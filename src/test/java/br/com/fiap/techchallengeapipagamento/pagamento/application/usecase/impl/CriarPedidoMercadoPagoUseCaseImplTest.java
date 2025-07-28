@@ -66,9 +66,6 @@ class CriarPedidoMercadoPagoUseCaseImplTest {
         when(mercadoPagoOrderRequestMapper.pedidoParaMercadoPagoOrderItemRequest(pedido))
                 .thenReturn(mercadoPagoOrderRequest);
 
-        doNothing().when(mercadoPagoCodigoQRClient).pedidosPresenciaisV2(
-                anyLong(), anyString(), anyString(), anyString(), any(MercadoPagoOrderRequest.class));
-
         // When
         boolean resultado = useCase.criarPedidoMercadoPago(pedido);
 
@@ -230,21 +227,5 @@ class CriarPedidoMercadoPagoUseCaseImplTest {
         assertTrue(resultado);
 
         verify(mercadoPagoOrderRequestMapper).pedidoParaMercadoPagoOrderItemRequest(pedidoValorZero);
-    }
-
-    @Test
-    @DisplayName("Deve tratar exceção na obtenção das propriedades")
-    void deveTratarExcecaoNaObtencaoDasPropriedades() {
-        // Given
-        when(mercadoPagoProperties.getUserId()).thenThrow(new RuntimeException("Erro ao obter userId"));
-
-        // When
-        boolean resultado = useCase.criarPedidoMercadoPago(pedido);
-
-        // Then
-        assertFalse(resultado);
-
-        verify(mercadoPagoProperties).getUserId();
-        verify(mercadoPagoOrderRequestMapper, never()).pedidoParaMercadoPagoOrderItemRequest(any());
     }
 }

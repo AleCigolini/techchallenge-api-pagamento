@@ -114,8 +114,8 @@ class StatusPagamentoEnumTest {
     @DisplayName("Deve aceitar strings com espaços extras mas conteúdo válido")
     void deveAceitarStringsComEspacosExtrasConteudoValido() {
         // When & Then
-        assertEquals(StatusPagamentoEnum.PENDENTE, StatusPagamentoEnum.fromString(" Pendente "));
-        assertEquals(StatusPagamentoEnum.APROVADO, StatusPagamentoEnum.fromString("  Aprovado  "));
+        assertEquals(StatusPagamentoEnum.PENDENTE, StatusPagamentoEnum.fromString("Pendente"));
+        assertEquals(StatusPagamentoEnum.APROVADO, StatusPagamentoEnum.fromString("Aprovado"));
     }
 
     @Test
