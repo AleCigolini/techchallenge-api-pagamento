@@ -34,18 +34,15 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
 
         boolean criouPedidoMercadoPago = criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedido);
 
-        if (isMercadoPagoAtivo) {
-            Pagamento pagamento = new Pagamento();
-            pagamento.setPreco(pedido.getPreco());
-            pagamento.setCodigoPedido(pedido.getCodigoPedido());
+        Pagamento pagamento = new Pagamento();
+        pagamento.setPreco(pedido.getPreco());
+        pagamento.setCodigoPedido(pedido.getCodigoPedido());
 
-            pagamento.setStatus(!criouPedidoMercadoPago ?
-                    StatusPagamentoEnum.REJEITADO.toString() :
-                    StatusPagamentoEnum.PENDENTE.toString());
+        pagamento.setStatus(!criouPedidoMercadoPago ?
+                StatusPagamentoEnum.REJEITADO.toString() :
+                StatusPagamentoEnum.PENDENTE.toString());
 
-            return pagamentoGateway.salvar(pagamento);
-        }
-        return null;
+        return pagamentoGateway.salvar(pagamento);
     }
 
     @Override
