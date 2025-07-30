@@ -16,9 +16,6 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
     private final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase;
     private final ConfirmarPagamentoPedidoUseCase confirmarPagamentoPedidoUseCase;
 
-    @Value("${mercado-pago.ativo}")
-    private boolean isMercadoPagoAtivo;
-
     public SalvarPagamentoUseCaseImpl(
             PagamentoGateway pagamentoGateway,
             CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase,

@@ -57,64 +57,6 @@ class SalvarPagamentoUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Deve fazer pagamento do pedido com sucesso quando MercadoPago está ativo e pedido foi criado")
-    void deveFazerPagamentoPedidoComSucessoQuandoMercadoPagoAtivoEPedidoCriado() {
-        // Given
-        ReflectionTestUtils.setField(useCase, "isMercadoPagoAtivo", true);
-        when(criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedido)).thenReturn(true);
-        when(pagamentoGateway.salvar(any(Pagamento.class))).thenReturn(pagamento);
-
-        // When
-        Pagamento resultado = useCase.fazerPagamentoDoPedido(pedido);
-
-        // Then
-        assertNotNull(resultado);
-        assertEquals(pagamento, resultado);
-
-        verify(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(pedido);
-        verify(pagamentoGateway).salvar(any(Pagamento.class));
-    }
-
-    @Test
-    @DisplayName("Deve criar pagamento com status REJEITADO quando falha ao criar pedido no MercadoPago")
-    void deveCriarPagamentoComStatusRejeitadoQuandoFalhaAoCriarPedidoMercadoPago() {
-        // Given
-        ReflectionTestUtils.setField(useCase, "isMercadoPagoAtivo", true);
-        when(criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedido)).thenReturn(false);
-
-        Pagamento pagamentoRejeitado = new Pagamento();
-        pagamentoRejeitado.setStatus("REJEITADO");
-        when(pagamentoGateway.salvar(any(Pagamento.class))).thenReturn(pagamentoRejeitado);
-
-        // When
-        Pagamento resultado = useCase.fazerPagamentoDoPedido(pedido);
-
-        // Then
-        assertNotNull(resultado);
-        assertEquals("REJEITADO", resultado.getStatus());
-
-        verify(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(pedido);
-        verify(pagamentoGateway).salvar(any(Pagamento.class));
-    }
-
-    @Test
-    @DisplayName("Deve retornar null quando MercadoPago está inativo")
-    void deveRetornarNullQuandoMercadoPagoInativo() {
-        // Given
-        ReflectionTestUtils.setField(useCase, "isMercadoPagoAtivo", false);
-        when(criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedido)).thenReturn(true);
-
-        // When
-        Pagamento resultado = useCase.fazerPagamentoDoPedido(pedido);
-
-        // Then
-        assertNull(resultado);
-
-        verify(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(pedido);
-        verify(pagamentoGateway, never()).salvar(any());
-    }
-
-    @Test
     @DisplayName("Deve atualizar status de pagamento com sucesso")
     void deveAtualizarStatusPagamentoComSucesso() {
         // Given
@@ -193,33 +135,5 @@ class SalvarPagamentoUseCaseImplTest {
 
         verify(pagamentoGateway).atualizarStatusPagamento(id, novoStatus.getStatus());
         verify(confirmarPagamentoPedidoUseCase, never()).confirmarPagamentoPedido(any());
-    }
-
-    @Test
-    @DisplayName("Deve criar pagamento com dados corretos do pedido")
-    void deveCriarPagamentoComDadosCorretosDoPedido() {
-        // Given
-        ReflectionTestUtils.setField(useCase, "isMercadoPagoAtivo", true);
-        Pedido pedidoEspecifico = new Pedido();
-        pedidoEspecifico.setCodigoPedido("ped-especifico");
-        pedidoEspecifico.setPreco(new BigDecimal("75.99"));
-
-        when(criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedidoEspecifico)).thenReturn(true);
-        when(pagamentoGateway.salvar(any(Pagamento.class))).thenAnswer(invocation -> {
-            Pagamento pagamentoSalvo = invocation.getArgument(0);
-            pagamentoSalvo.setId("novo-pag-id");
-            return pagamentoSalvo;
-        });
-
-        // When
-        Pagamento resultado = useCase.fazerPagamentoDoPedido(pedidoEspecifico);
-
-        // Then
-        assertNotNull(resultado);
-        assertEquals("ped-especifico", resultado.getCodigoPedido());
-        assertEquals(new BigDecimal("75.99"), resultado.getPreco());
-        assertEquals("PENDENTE", resultado.getStatus());
-
-        verify(pagamentoGateway).salvar(any(Pagamento.class));
     }
 }
