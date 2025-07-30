@@ -23,6 +23,8 @@ spec:
           ports:
             - containerPort: 8081
           env:
+            - name: SERVER_SERVLET_CONTEXT_PATH
+              value: /pagamentos
             - name: SPRING_PROFILES_ACTIVE
               value: prod
             - name: SPRING_DATA_MONGODB_URI
@@ -61,13 +63,13 @@ spec:
               memory: "1024Mi"
           readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: /pagamentos/actuator/health
               port: 8081
             initialDelaySeconds: 60
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /pagamentos/actuator/health
               port: 8081
             initialDelaySeconds: 60
             periodSeconds: 10
@@ -75,7 +77,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: java-app-pagamento
+  name: java-app-pagamento-service
 spec:
   ports:
     - protocol: TCP
@@ -98,7 +100,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: java-app-pagamento
+                name: java-app-pagamento-service
                 port:
                   number: 80
 ---
