@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://${MONGO_USER:admin}:${MONGO_PASSWORD:admin123}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/tech_challenge_pagamentos?authSource=admin
+      uri: mongodb://pagamento-dev:ItQzo7sit0CooB1TczUnAI9cWIxsB82sf8faewihifmi6eKcU7zA4r42uUbj7iJ6u4grsSdyNKl6ACDbgxh94w==@pagamento-dev.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@pagamento-dev@
       auto-index-creation: true
       connection-pool:
         max-size: 50
